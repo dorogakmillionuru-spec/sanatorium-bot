@@ -18,6 +18,7 @@ export default async function handler(req, res) {
 
     // первый контакт
     if (text === "/start") {
+      sessions[chatId] = { step: "start" };
       reply = "Санаторий открыт 🙂 Сливай сюда всё, что происходит. Я разберу.";
     } 
     
@@ -42,6 +43,10 @@ export default async function handler(req, res) {
       }
     }
 
+    sessions[chatId] = {
+  ...user,
+  lastMessage: text
+};
     await fetch(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`, {
       method: "POST",
       headers: {
