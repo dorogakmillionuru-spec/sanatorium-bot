@@ -14,6 +14,8 @@ export default async function handler(req, res) {
 
     let reply = "";
 
+    const user = sessions[chatId] || {};
+
     // первый контакт
     if (text === "/start") {
       reply = "Санаторий открыт 🙂 Сливай сюда всё, что происходит. Я разберу.";
