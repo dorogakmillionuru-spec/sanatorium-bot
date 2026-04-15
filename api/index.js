@@ -618,10 +618,15 @@ async function sendInlineMenu(chatId) {
 }
 
 async function sendBuyMessage(chatId) {
-  if (!BUY_CODE_URL) {
-    await sendMessage(chatId, "Ссылка на получение кода ещё не подключена.");
-    return;
-  }
+  await sendMessage(chatId, "Выбери пакет:", {
+    inline_keyboard: [
+      [{ text: "1 сессия — 390₽", callback_data: "buy_1" }],
+      [{ text: "3 сессии — 790₽", callback_data: "buy_3" }],
+      [{ text: "5 сессий — 1190₽", callback_data: "buy_5" }],
+      [{ text: "10 сессий — 1990₽", callback_data: "buy_10" }],
+    ],
+  });
+}
 
   await sendMessage(chatId, `Забрать код можно здесь:\n${BUY_CODE_URL}`);
 }
