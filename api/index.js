@@ -185,6 +185,41 @@ export default async function handler(req, res) {
 
   try {
     const update = req.body || {};
+    if (body.callback_query) {
+  const callbackId = body.callback_query.id;
+  const chatId = body.callback_query.message.chat.id;
+  const data = body.callback_query.data;
+
+  if (data === "buy_code") {
+    await sendBuyMessage(chatId);
+    await answerCallbackQuery(callbackId);
+    return;
+  }
+
+  if (data === "buy_1") {
+    await answerCallbackQuery(callbackId);
+    await sendMessage(chatId, "Пакет 1 сессия — 390₽\nСсылка на оплату скоро будет");
+    return;
+  }
+
+  if (data === "buy_3") {
+    await answerCallbackQuery(callbackId);
+    await sendMessage(chatId, "Пакет 3 сессии — 790₽\nСсылка на оплату скоро будет");
+    return;
+  }
+
+  if (data === "buy_5") {
+    await answerCallbackQuery(callbackId);
+    await sendMessage(chatId, "Пакет 5 сессий — 1190₽\nСсылка на оплату скоро будет");
+    return;
+  }
+
+  if (data === "buy_10") {
+    await answerCallbackQuery(callbackId);
+    await sendMessage(chatId, "Пакет 10 сессий — 1990₽\nСсылка на оплату скоро будет");
+    return;
+  }
+}
 
     if (update.callback_query) {
       await handleCallbackQuery(update.callback_query);
