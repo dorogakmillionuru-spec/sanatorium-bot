@@ -626,7 +626,6 @@ async function sendBuyMessage(chatId) {
       [{ text: "10 сессий — 1990₽", callback_data: "buy_10" }],
     ],
   });
-}
 
   await sendMessage(chatId, `Забрать код можно здесь:\n${BUY_CODE_URL}`);
 }
