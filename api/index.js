@@ -601,7 +601,9 @@ async function handleCallbackQuery(callbackQuery) {
   if (data === "buy_1") {
     await answerCallbackQuery(callbackId, "Ок");
     const paymentUrl = await createPayment("390.00", "1 сессия");
-    await sendMessage(chatId, `Оплата 1 сессии — 390₽\n\nОплатить: ${paymentUrl}`);
+    await sendMessage(chatId, "Оплата 1 сессии — 390₽", {
+      inline_keyboard: [[{ text: "💳 Оплатить", url: paymentUrl }]],
+    });
     return;
   }
 
