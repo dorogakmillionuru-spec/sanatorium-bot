@@ -184,6 +184,7 @@ export default async function handler(req, res) {
   }
 
   try {
+    warnIfMissingEnv();
     const update = req.body || {};
 
     if (update.callback_query) {
@@ -277,7 +278,9 @@ export default async function handler(req, res) {
 
     await sendMessage(chatId, cleanText);
 
-    if (shouldLock && !user.access_active) {
+    // Показываем меню после закрытия сессии всегда: локальный `user` может быть устаревшим,
+    // т.к. lockSessionForUser меняет доступ в базе.
+    if (shouldLock) {
       await sendInlineMenu(chatId);
     }
 
@@ -593,6 +596,30 @@ async function handleCallbackQuery(callbackQuery) {
     return;
   }
 
+  if (data === "buy_1") {
+    await answerCallbackQuery(callbackId, "Ок");
+    await sendMessage(chatId, "1 сессия — 390₽");
+    return;
+  }
+
+  if (data === "buy_3") {
+    await answerCallbackQuery(callbackId, "Ок");
+    await sendMessage(chatId, "3 сессии — 790₽");
+    return;
+  }
+
+  if (data === "buy_5") {
+    await answerCallbackQuery(callbackId, "Ок");
+    await sendMessage(chatId, "5 сессий — 1190₽");
+    return;
+  }
+
+  if (data === "buy_10") {
+    await answerCallbackQuery(callbackId, "Ок");
+    await sendMessage(chatId, "10 сессий — 1990₽");
+    return;
+  }
+
   if (data === "help_text") {
     await answerCallbackQuery(callbackId, "Помощь");
     await sendMessage(chatId, SUPPORT_TEXT);
@@ -627,6 +654,17 @@ async function sendBuyMessage(chatId) {
     ],
   });
 
+  await sendBuyLink(chatId);
+}
+
+async function sendBuyLink(chatId) {
+  if (!BUY_CODE_URL) {
+    await sendMessage(
+      chatId,
+      "Ссылка на получение кода пока не настроена. Напиши в поддержку: /help"
+    );
+    return;
+  }
   await sendMessage(chatId, `Забрать код можно здесь:\n${BUY_CODE_URL}`);
 }
 
@@ -927,4 +965,18 @@ async function sbFetch(path, options = {}) {
 
   const text = await response.text();
   return text ? JSON.parse(text) : [];
+}
+
+function warnIfMissingEnv() {
+  const missing = [];
+  if (!BOT_TOKEN) missing.push("BOT_TOKEN");
+  if (!SUPABASE_URL) missing.push("SUPABASE_URL");
+  if (!SUPABASE_SERVICE_ROLE_KEY) missing.push("SUPABASE_SERVICE_ROLE_KEY");
+  if (!OPENAI_API_KEY) missing.push("OPENAI_API_KEY");
+
+  if (missing.length) {
+    console.warn(
+      `CONFIG_WARNING: missing env vars: ${missing.join(", ")}`
+    );
+  }
 }
