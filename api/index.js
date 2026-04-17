@@ -600,7 +600,7 @@ async function handleCallbackQuery(callbackQuery) {
 
   if (data === "buy_1") {
     await answerCallbackQuery(callbackId, "Ок");
-    const paymentUrl = await createPayment("390.00", "1 сессия");
+    const paymentUrl = await createPayment("390.00", "1 сессия", chatId);
     await sendMessage(chatId, "Оплата 1 сессии — 390₽", {
       inline_keyboard: [[{ text: "💳 Оплатить", url: paymentUrl }]],
     });
@@ -673,7 +673,7 @@ async function sendBuyLink(chatId) {
   await sendMessage(chatId, `Забрать код можно здесь:\n${BUY_CODE_URL}`);
 }
 
-async function createPayment(amount, description) {
+async function createPayment(amount, description, chatId) {
   const creds = `${SHOP_ID}:${SECRET_KEY}`;
   const auth = Buffer.from(creds, "utf8").toString("base64");
   const idempotenceKey = Date.now().toString();
@@ -696,6 +696,9 @@ async function createPayment(amount, description) {
       },
       capture: true,
       description,
+      metadata: {
+        chatId: String(chatId),
+      },
     }),
   });
 
