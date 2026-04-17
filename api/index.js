@@ -3,6 +3,8 @@ const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-4.1-mini";
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const SHOP_ID = process.env.SHOP_ID;
+const SECRET_KEY = process.env.SECRET_KEY;
 const BUY_CODE_URL = process.env.BUY_CODE_URL || "";
 const SUPPORT_TEXT = process.env.SUPPORT_TEXT || "Если что-то сломалось — напиши Юле.";
 const ADMIN_IDS = new Set(
@@ -598,7 +600,8 @@ async function handleCallbackQuery(callbackQuery) {
 
   if (data === "buy_1") {
     await answerCallbackQuery(callbackId, "Ок");
-    await sendMessage(chatId, "1 сессия — 390₽\n\nНапиши сюда: @yuliyakuzminova\nЯ выдам код и открою доступ");
+    const paymentUrl = await createPayment("390.00", "1 сессия");
+    await sendMessage(chatId, `Оплата 1 сессии — 390₽\n\nОплатить: ${paymentUrl}`);
     return;
   }
 
@@ -666,6 +669,41 @@ async function sendBuyLink(chatId) {
     return;
   }
   await sendMessage(chatId, `Забрать код можно здесь:\n${BUY_CODE_URL}`);
+}
+
+async function createPayment(amount, description) {
+  const creds = `${SHOP_ID}:${SECRET_KEY}`;
+  const auth = Buffer.from(creds, "utf8").toString("base64");
+  const idempotenceKey = Date.now().toString();
+
+  const me = await getMe();
+  const returnUrl = `https://t.me/${me.username}`;
+
+  const response = await fetch("https://api.yookassa.ru/v3/payments", {
+    method: "POST",
+    headers: {
+      Authorization: `Basic ${auth}`,
+      "Content-Type": "application/json",
+      "Idempotence-Key": idempotenceKey,
+    },
+    body: JSON.stringify({
+      amount: { value: amount, currency: "RUB" },
+      confirmation: {
+        type: "redirect",
+        return_url: returnUrl,
+      },
+      capture: true,
+      description,
+    }),
+  });
+
+  if (!response.ok) {
+    const err = await response.text();
+    throw new Error(`YOOKASSA_ERROR: ${err}`);
+  }
+
+  const json = await response.json();
+  return json.confirmation?.confirmation_url;
 }
 
 async function askOpenAI({ systemPrompt, history }) {
