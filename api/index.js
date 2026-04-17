@@ -598,25 +598,25 @@ async function handleCallbackQuery(callbackQuery) {
 
   if (data === "buy_1") {
     await answerCallbackQuery(callbackId, "Ок");
-    await sendMessage(chatId, "1 сессия — 390₽");
+    await sendMessage(chatId, "1 сессия — 390₽\n\nНапиши сюда: @yuliyakuzminova\nЯ выдам код и открою доступ");
     return;
   }
 
   if (data === "buy_3") {
     await answerCallbackQuery(callbackId, "Ок");
-    await sendMessage(chatId, "3 сессии — 790₽");
+    await sendMessage(chatId, "3 сессии — 790₽\n\nНапиши сюда: @yuliyakuzminova\nЯ выдам код и открою доступ");
     return;
   }
 
   if (data === "buy_5") {
     await answerCallbackQuery(callbackId, "Ок");
-    await sendMessage(chatId, "5 сессий — 1190₽");
+    await sendMessage(chatId, "5 сессий — 1190₽\n\nНапиши сюда: @yuliyakuzminova\nЯ выдам код и открою доступ");
     return;
   }
 
   if (data === "buy_10") {
     await answerCallbackQuery(callbackId, "Ок");
-    await sendMessage(chatId, "10 сессий — 1990₽");
+    await sendMessage(chatId, "10 сессий — 1990₽\n\nНапиши сюда: @yuliyakuzminova\nЯ выдам код и открою доступ");
     return;
   }
 
