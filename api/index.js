@@ -83,7 +83,11 @@ export default async function handler(req, res) {
     const firstName = message.from?.first_name || "";
     const username = message.from?.username || "";
     const text = (message.text || "").trim();
-
+    
+const startPayload = text.startsWith("/start") 
+  ? text.replace("/start", "").trim() 
+  : "";
+    
     if (!chatId || !telegramId) {
       return res.status(200).send("ok");
     }
