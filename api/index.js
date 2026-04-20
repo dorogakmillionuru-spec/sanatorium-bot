@@ -39,7 +39,7 @@ const SYSTEM_PROMPT = `
 «Диалог завершён. Дальше доступ открывается после оплаты. Но сейчас временная возможность: следующая сессия бесплатно. Сделай скрин этого диалога и отправь Юле: @yuliyakuzminova.
 Она откроет доступ без оплаты.
 
-И ещё. У меня есть партнёрская ссылка. Посмотри на свою команду — они тоже, наверное, выгорели и молчат. Может, кто-то из них хочет выдохнуть? Кинь им ссылку: ССЫЛКА_ЗАГЛУШКА. Вдруг проснутся 😏
+И ещё. У меня есть партнёрская ссылка. Посмотри на свою команду — они тоже, наверное, выгорели и молчат. Может, кто-то из них хочет выдохнуть? Кинь им ссылку: ${userRefLink}. Вдруг проснутся 😏
 
 Если что непонятно — пиши Юле @yuliyakuzminova.»
 
@@ -154,6 +154,7 @@ const startPayload = text.startsWith("/start")
       username: user.username || username,
       telegramId,
       mentorName,
+      userRefLink: `https://t.me/tolik_sanatorium_bot?start=ref_${telegramId}`,
     });
 
     const assistantTextRaw = await askOpenAI({
@@ -184,7 +185,7 @@ const startPayload = text.startsWith("/start")
   }
 }
 
-function buildSystemPrompt({ firstName, username, telegramId, mentorName }) {
+function buildSystemPrompt({ firstName, username, telegramId, mentorName, userRefLink }) {
   const safeName = firstName || "";
   const safeUsername = username ? `@${username}` : "";
   const safeMentor = mentorName || "не указан";
@@ -404,6 +405,7 @@ async function handleStartCommand({ chatId, telegramId, firstName, username, tex
     username: user?.username || username,
     telegramId,
     mentorName,
+    userRefLink: `https://t.me/tolik_sanatorium_bot?start=ref_${telegramId}`,
   });
 
   const syntheticStartMessage =
