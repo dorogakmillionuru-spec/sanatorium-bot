@@ -17,7 +17,7 @@ const ADMIN_IDS = new Set(
 const TELEGRAM_API = `https://api.telegram.org/bot${BOT_TOKEN}`;
 const SUPABASE_REST = `${SUPABASE_URL}/rest/v1`;
 
-const SYSTEM_PROMPT = `
+const SYSTEM_PROMPT_BEFORE_REF = `
 Ты — Толик. Коллега с соседнего стола. Говоришь по-человечески, с иронией, без пафоса. Обращайся по имени: {{USER_NAME}}.
 
 Ты помогаешь выдохнуть и увидеть свой затык. Не даёшь советов по приглашениям, текстам, продажам.
@@ -39,7 +39,9 @@ const SYSTEM_PROMPT = `
 «Диалог завершён. Дальше доступ открывается после оплаты. Но сейчас временная возможность: следующая сессия бесплатно. Сделай скрин этого диалога и отправь Юле: @yuliyakuzminova.
 Она откроет доступ без оплаты.
 
-И ещё. У меня есть партнёрская ссылка. Посмотри на свою команду — они тоже, наверное, выгорели и молчат. Может, кто-то из них хочет выдохнуть? Кинь им ссылку: ${userRefLink}. Вдруг проснутся 😏
+И ещё. У меня есть партнёрская ссылка. Посмотри на свою команду — они тоже, наверное, выгорели и молчат. Может, кто-то из них хочет выдохнуть? Кинь им ссылку: `;
+
+const SYSTEM_PROMPT_AFTER_REF = `. Вдруг проснутся 😏
 
 Если что непонятно — пиши Юле @yuliyakuzminova.»
 
@@ -190,14 +192,16 @@ function buildSystemPrompt({ firstName, username, telegramId, mentorName, userRe
   const safeUsername = username ? `@${username}` : "";
   const safeMentor = mentorName || "не указан";
 
-  return `${SYSTEM_PROMPT}
-
-${TECH_PROMPT
-  .replaceAll("{{USER_NAME}}", safeName)
-  .replaceAll("{{USER_USERNAME}}", safeUsername)
-  .replaceAll("{{TELEGRAM_ID}}", String(telegramId))
-  .replaceAll("{{MENTOR_NAME}}", safeMentor)}
-`;
+  return (
+    SYSTEM_PROMPT_BEFORE_REF +
+    userRefLink +
+    SYSTEM_PROMPT_AFTER_REF +
+    "\n\n" +
+    TECH_PROMPT.replaceAll("{{USER_NAME}}", safeName)
+      .replaceAll("{{USER_USERNAME}}", safeUsername)
+      .replaceAll("{{TELEGRAM_ID}}", String(telegramId))
+      .replaceAll("{{MENTOR_NAME}}", safeMentor)
+  );
 }
 
 function extractLockMarker(text) {
