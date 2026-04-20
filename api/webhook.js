@@ -42,7 +42,7 @@ export default async function handler(req, res) {
 
     await sendTelegramMessage(
       chatId,
-      "Оплата прошла ✅\nДоступ открыт.\nМожешь возвращаться в бот и продолжать."
+  text: "Вижу, оплата прошла ✅\nТеперь можно выдохнуть.\nЧто накопилось?"
     );
 
     return res.status(200).send("ok");
