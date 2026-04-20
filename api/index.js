@@ -432,6 +432,11 @@ async function handleStartCommand({ chatId, telegramId, firstName, username, tex
     await lockSessionForUser(user || { telegram_id: telegramId, has_used_free: false, access_active: false });
   }
 
+  await sendPhoto(
+    chatId,
+    "https://i.ibb.co/wNMfKCkK/C49-B2-B0-B-1-E56-4-CA9-AA82-B2-F7-DDEB6-CF6.png"
+  );
+
   await sendMessage(chatId, cleanText);
 
   if (shouldLock && !(user?.access_active)) {
@@ -661,6 +666,24 @@ async function sendMessage(chatId, text, inlineKeyboard = null) {
   if (!response.ok) {
     const err = await response.text();
     throw new Error(`TELEGRAM_SEND_ERROR: ${err}`);
+  }
+}
+
+async function sendPhoto(chatId, photo) {
+  const response = await fetch(`${TELEGRAM_API}/sendPhoto`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      chat_id: chatId,
+      photo,
+    }),
+  });
+
+  if (!response.ok) {
+    const err = await response.text();
+    throw new Error(`TELEGRAM_SEND_PHOTO_ERROR: ${err}`);
   }
 }
 
