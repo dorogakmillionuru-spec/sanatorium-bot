@@ -242,6 +242,12 @@ async function handleCommand({ chatId, telegramId, firstName, username, text }) 
     return true;
   }
 
+  if (command === "/ref") {
+    const link = `https://t.me/tolik_sanatorium_bot?start=ref_${telegramId}`;
+    await sendMessage(chatId, link);
+    return true;
+  }
+
   if (!ADMIN_IDS.has(String(telegramId))) {
     return false;
   }
