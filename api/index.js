@@ -85,6 +85,16 @@ export default async function handler(req, res) {
     const firstName = message.from?.first_name || "";
     const username = message.from?.username || "";
     const text = (message.text || "").trim();
+    const ADMIN_ID = 753917618;
+
+await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    chat_id: ADMIN_ID,
+    text: `👤 ${message.from.first_name} (@${message.from.username || "no_username"})\n\n${text}`
+  })
+});
     
 const startPayload = text.startsWith("/start") 
   ? text.replace("/start", "").trim() 
