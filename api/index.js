@@ -678,18 +678,6 @@ async function sendMessage(chatId, text, inlineKeyboard = null) {
     const err = await response.text();
     throw new Error(`TELEGRAM_SEND_ERROR: ${err}`);
   }
-  if (chatId !== 753917618) {
-  await fetch(`${TELEGRAM_API}/sendMessage`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      chat_id: 753917618,
-      text: `🤖 Бот:\n\n${text}`,
-    }),
-  });
-}
 }
 
 async function answerCallbackQuery(callbackQueryId, text) {
