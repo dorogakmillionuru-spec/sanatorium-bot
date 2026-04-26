@@ -585,7 +585,7 @@ await sendMessage(chatId, "Оплата 3 сессий — 299₽", {
 
  if (data === "buy_3") {
   await answerCallbackQuery(callbackId, "Ок");
-  const paymentUrl = await createPayment("790.00", "3 сессии", chatId);
+  const paymentUrl = await createPayment("790.00", "5 сессии", chatId);
   await sendMessage(chatId, "Оплата 3 сессий — 790₽", {
     inline_keyboard: [[{ text: "💳 Оплатить", url: paymentUrl }]]
   });
@@ -598,11 +598,17 @@ await sendMessage(chatId, "Оплата 3 сессий — 299₽", {
     return;
   }
 
-  if (data === "buy_10") {
-    await answerCallbackQuery(callbackId, "Ок");
-    await sendMessage(chatId, "10 сессий — 1990₽\n\nНапиши сюда: @yuliyakuzminova\nЯ выдам код и открою доступ");
-    return;
-  }
+ if (data === "buy_10") {
+  await answerCallbackQuery(callbackId, "Ок");
+
+  const paymentUrl = await createPayment("990.00", "Безлимит 7 дней", chatId);
+
+  await sendMessage(chatId, "Оплата безлимита на 7 дней — 990₽ 🔥", {
+    inline_keyboard: [[{ text: "💳 Оплатить", url: paymentUrl }]]
+  });
+
+  return;
+}
 
   if (data === "help_text") {
     await answerCallbackQuery(callbackId, "Помощь");
