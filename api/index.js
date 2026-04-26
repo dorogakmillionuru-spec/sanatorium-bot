@@ -638,14 +638,15 @@ async function sendBuyMessage(chatId) {
 }
 
 async function sendBuyLink(chatId) {
-  if (!BUY_CODE_URL) {
-    await sendMessage(
-      chatId,
-      "Ссылка на получение кода пока не настроена. Напиши в поддержку: /help"
-    );
-    return;
-  }
-  await sendMessage(chatId, `Забрать код можно здесь:\n${BUY_CODE_URL}`);
+if (!BUY_CODE_URL) {
+  await sendMessage(
+    chatId,
+    "Ссылка на получение кода пока не настроена. Напиши в поддержку: /help"
+  );
+  return;
+}
+  
+ await sendMessage(chatId, `Забрать код можно здесь:\n${BUY_CODE_URL}`);
 }
 
 async function createPayment(amount, description, chatId) {
