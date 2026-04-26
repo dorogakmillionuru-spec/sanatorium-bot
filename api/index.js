@@ -179,7 +179,21 @@ const startPayload = text.startsWith("/start")
       await lockSessionForUser(user);
     }
 
-    await sendMessage(chatId, cleanText);
+    if (shouldLock) {
+  const parts = cleanText.split("Диалог завершён.");
+
+  const personal = parts[0].trim();
+  const tech = "Диалог завершён." + (parts[1] || "");
+
+  if (personal) {
+    await sendMessage(chatId, personal);
+  }
+
+  await sendMessage(chatId, tech);
+
+} else {
+  await sendMessage(chatId, cleanText);
+}
 
     // Показываем меню после закрытия сессии всегда: локальный `user` может быть устаревшим,
     // т.к. lockSessionForUser меняет доступ в базе.
