@@ -618,7 +618,7 @@ async function sendNoAccessMessage(chatId) {
 async function sendInlineMenu(chatId) {
   await sendMessage(chatId, "Что делаем дальше?", {
     inline_keyboard: [
-  [{ text: "Попробовать", callback_data: "buy_code" }],
+  [{ text: "Купить доступ", callback_data: "buy_code" }],
   [{ text: "У меня есть код", callback_data: "enter_code" }],
   [{ text: "Помощь", url: "https://t.me/yuliyakuzminova" }],
 ]
