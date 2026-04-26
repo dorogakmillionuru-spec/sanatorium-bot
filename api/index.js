@@ -626,13 +626,13 @@ async function sendInlineMenu(chatId) {
 }
 
 async function sendBuyMessage(chatId) {
-  await sendMessage(chatId, "Выбери пакет:", {
-    inline_keyboard: [
-      [{ text: "Попробовать — 299₽", callback_data: "buy_1" }],
-[{ text: "Поглубже — 790₽", callback_data: "buy_3" }],
-[{ text: "Неделя — 990₽ 🔥", callback_data: "buy_7" }],
-    ],
-  });
+  await sendMessage(chatId, "Выбери формат:", {
+  inline_keyboard: [
+    [{ text: "Попробовать (1 сессия) — 299₽", callback_data: "buy_1" }],
+    [{ text: "Поглубже (3 сессии) — 790₽", callback_data: "buy_3" }],
+    [{ text: "Безлимит на 7 дней — 990₽ 🔥", callback_data: "buy_10" }],
+  ],
+});
 
   await sendBuyLink(chatId);
 }
