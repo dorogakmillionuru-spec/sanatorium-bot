@@ -512,7 +512,7 @@ async function handleCodeInput({ chatId, telegramId, text, user }) {
     pending_action: null,
   });
 
-  await sendMessage(chatId, "Код принят. Доступ открыт. Продолжай.");
+  await sendMessage(chatId, "О, приняли код 👌 Доступ открыт, давай продолжим.");
 }
 
 async function handleCallbackQuery(callbackQuery) {
