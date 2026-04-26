@@ -576,18 +576,21 @@ async function handleCallbackQuery(callbackQuery) {
 
   if (data === "buy_1") {
     await answerCallbackQuery(callbackId, "Ок");
-    const paymentUrl = await createPayment("390.00", "1 сессия", chatId);
-    await sendMessage(chatId, "Оплата 1 сессии — 390₽", {
+    const paymentUrl = await createPayment("299.00", "3 сессии", chatId);
+await sendMessage(chatId, "Оплата 3 сессий — 299₽", {
       inline_keyboard: [[{ text: "💳 Оплатить", url: paymentUrl }]],
     });
     return;
   }
 
-  if (data === "buy_3") {
-    await answerCallbackQuery(callbackId, "Ок");
-    await sendMessage(chatId, "3 сессии — 790₽\n\nНапиши сюда: @yuliyakuzminova\nЯ выдам код и открою доступ");
-    return;
-  }
+ if (data === "buy_3") {
+  await answerCallbackQuery(callbackId, "Ок");
+  const paymentUrl = await createPayment("790.00", "3 сессии", chatId);
+  await sendMessage(chatId, "Оплата 3 сессий — 790₽", {
+    inline_keyboard: [[{ text: "💳 Оплатить", url: paymentUrl }]]
+  });
+  return;
+}
 
   if (data === "buy_5") {
     await answerCallbackQuery(callbackId, "Ок");
