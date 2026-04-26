@@ -602,20 +602,19 @@ async function sendNoAccessMessage(chatId) {
 async function sendInlineMenu(chatId) {
   await sendMessage(chatId, "Что делаем дальше?", {
     inline_keyboard: [
-      [{ text: "Ввести код", callback_data: "enter_code" }],
-      [{ text: "Получить код", callback_data: "buy_code" }],
-      [{ text: "Помощь", url: "https://t.me/yuliyakuzminova" }],
-    ],
+  [{ text: "Попробовать", callback_data: "buy_code" }],
+  [{ text: "У меня есть код", callback_data: "enter_code" }],
+  [{ text: "Помощь", url: "https://t.me/yuliyakuzminova" }],
+]
   });
 }
 
 async function sendBuyMessage(chatId) {
   await sendMessage(chatId, "Выбери пакет:", {
     inline_keyboard: [
-      [{ text: "1 сессия — 390₽", callback_data: "buy_1" }],
-      [{ text: "3 сессии — 790₽", callback_data: "buy_3" }],
-      [{ text: "5 сессий — 1190₽", callback_data: "buy_5" }],
-      [{ text: "10 сессий — 1990₽", callback_data: "buy_10" }],
+      [{ text: "Попробовать — 299₽", callback_data: "buy_1" }],
+[{ text: "Поглубже — 790₽", callback_data: "buy_3" }],
+[{ text: "Неделя — 990₽ 🔥", callback_data: "buy_7" }],
     ],
   });
 
