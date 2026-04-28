@@ -830,9 +830,10 @@ async function lockSessionForUser(user) {
     return;
   }
 
-  if (user.access_active) {
+if (user.access_active) {
+  if (user.sessions_left && user.sessions_left > 0) {
     await updateUserFields(user.telegram_id, {
-      access_active: false,
+      sessions_left: user.sessions_left - 1,
     });
   }
 }
