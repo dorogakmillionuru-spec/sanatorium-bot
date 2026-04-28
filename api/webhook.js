@@ -137,3 +137,4 @@ async function sbFetch(path, options = {}) {
   const text = await response.text();
   return text ? JSON.parse(text) : [];
 }
+module.exports = handler;
