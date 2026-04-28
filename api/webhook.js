@@ -37,7 +37,7 @@ async function handler(req, res) {
       return res.status(200).send("ok");
     }
 
-    if (plan === "3 сессии") {
+    if (plan === "3") {
   await updateUserAccess(chatId, {
     access_active: true,
     sessions_left: 3,
@@ -47,7 +47,7 @@ async function handler(req, res) {
   });
 }
 
-else if (plan === "5 сессий") {
+else if (plan === "5") {
   await updateUserAccess(chatId, {
     access_active: true,
     sessions_left: 5,
@@ -57,7 +57,7 @@ else if (plan === "5 сессий") {
   });
 }
 
-else if (plan === "Безлимит 7 дней") {
+else if (plan === "7") {
   const until = new Date();
   until.setDate(until.getDate() + 7);
 
