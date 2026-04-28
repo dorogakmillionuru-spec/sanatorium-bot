@@ -578,7 +578,7 @@ await sendMessage(chatId, "Оплата 3 сессий — 299₽", {
  if (data === "buy_3") {
   await answerCallbackQuery(callbackId, "Ок");
   const paymentUrl = await createPayment("790.00", "5 сессии", chatId);
-  await sendMessage(chatId, "Оплата 3 сессий — 790₽", {
+  await sendMessage(chatId, "Оплата 5 сессий — 790₽", {
     inline_keyboard: [[{ text: "💳 Оплатить", url: paymentUrl }]]
   });
   return;
@@ -644,7 +644,7 @@ if (!BUY_CODE_URL) {
  await sendMessage(chatId, `Забрать код можно здесь:\n${BUY_CODE_URL}`);
 }
 
-async function createPayment(amount, description, chatId) {
+async function createPayment(amount, description, chatId, plan) {
   const creds = `${SHOP_ID}:${SECRET_KEY}`;
   const auth = Buffer.from(creds, "utf8").toString("base64");
   const idempotenceKey = Date.now().toString();
