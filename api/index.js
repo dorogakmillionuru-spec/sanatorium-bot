@@ -831,11 +831,9 @@ async function lockSessionForUser(user) {
   }
 
 if (user.access_active) {
-  if (user.sessions_left && user.sessions_left > 0) {
-    await updateUserFields(user.telegram_id, {
-      sessions_left: user.sessions_left - 1,
-    });
-  }
+  await updateUserFields(user.telegram_id, {
+    access_active: false,
+  });
 }
 
 async function saveMessage(telegramId, role, content) {
