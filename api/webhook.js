@@ -18,7 +18,7 @@ export default async function handler(req, res) {
     }
 
     const payment = event.object || {};
-    const plan = payment.metadata?.plan;
+    const plan = String(payment.metadata?.plan || "").trim
     const chatId = String(payment.metadata?.chatId || "").trim();
 
     if (!chatId) {
