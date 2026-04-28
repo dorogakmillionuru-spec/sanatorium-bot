@@ -587,7 +587,7 @@ await sendMessage(chatId, "Оплата 3 сессий — 299₽", {
   if (data === "buy_10") {
   await answerCallbackQuery(callbackId, "Ок");
 
-  const paymentUrl = await createPayment("990.00", "Безлимит 7 дней", chatId);
+  const paymentUrl = await createPayment("990.00", "Безлимит 7 дней", chatId, "week_unlimited");
 
   await sendMessage(chatId, "Оплата безлимита на 7 дней — 990₽ 🔥", {
     inline_keyboard: [[{ text: "💳 Оплатить", url: paymentUrl }]]
