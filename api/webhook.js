@@ -12,6 +12,7 @@ async function handler(req, res) {
 
   try {
     const event = req.body || {};
+    console.log("WEBHOOK EVENT:", JSON.stringify(event, null, 2));
 
     if (event.event !== "payment.succeeded") {
       return res.status(200).send("ok");
