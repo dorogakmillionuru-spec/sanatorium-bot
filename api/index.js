@@ -629,7 +629,6 @@ async function sendBuyMessage(chatId) {
   ],
 });
 
-  await sendBuyLink(chatId);
 }
 
 async function sendBuyLink(chatId) {
