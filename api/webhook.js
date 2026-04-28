@@ -19,7 +19,7 @@ async function handler(req, res) {
     }
 
     const payment = event.object || {};
-    const plan = String(payment.metadata?.plan || "").trim
+    const plan = String(payment.metadata?.plan || payment.description || "").trim();
     const chatId = String(payment.metadata?.chatId || "").trim();
 
     if (!chatId) {
