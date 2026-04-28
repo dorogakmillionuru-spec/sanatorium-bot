@@ -147,18 +147,6 @@ await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
   })
 });
     
-const startPayload = text.startsWith("/start") 
-  ? text.replace("/start", "").trim() 
-  : "";
-
-    if (startPayload.startsWith("ref_")) {
-  const slug = startPayload.replace("ref_", "").trim();
-
-  await supabase
-  .from("users")
-  .update({ mentor_slug: slug })
-  .eq("telegram_id", telegramId);
-}
     if (!chatId || !telegramId) {
       return res.status(200).send("ok");
     }
