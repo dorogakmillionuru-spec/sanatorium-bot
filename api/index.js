@@ -667,9 +667,10 @@ async function createPayment(amount, description, chatId, plan) {
       },
       capture: true,
       description,
-      metadata: {
-        chatId: String(chatId),
-      },
+     metadata: {
+  chatId: String(chatId),
+  plan: description,
+},
     }),
   });
 
