@@ -35,11 +35,38 @@ export default async function handler(req, res) {
       return res.status(200).send("ok");
     }
 
-    await updateUserAccess(chatId, {
-      access_active: true,
-      pending_action: null,
-      updated_at: new Date().toISOString(),
-    });
+    if (plan === "3 сессии") {
+  await updateUserAccess(chatId, {
+    access_active: true,
+    sessions_left: 3,
+    unlimited_until: null,
+    pending_action: null,
+    updated_at: new Date().toISOString(),
+  });
+}
+
+else if (plan === "5 сессий") {
+  await updateUserAccess(chatId, {
+    access_active: true,
+    sessions_left: 5,
+    unlimited_until: null,
+    pending_action: null,
+    updated_at: new Date().toISOString(),
+  });
+}
+
+else if (plan === "Безлимит 7 дней") {
+  const until = new Date();
+  until.setDate(until.getDate() + 7);
+
+  await updateUserAccess(chatId, {
+    access_active: true,
+    sessions_left: null,
+    unlimited_until: until.toISOString(),
+    pending_action: null,
+    updated_at: new Date().toISOString(),
+  });
+}
 
     await sendTelegramMessage(
       chatId,
