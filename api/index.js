@@ -835,7 +835,7 @@ if (user.access_active) {
     access_active: false,
   });
 }
-
+}
 async function saveMessage(telegramId, role, content) {
   await sbFetch(`/messages`, {
     method: "POST",
