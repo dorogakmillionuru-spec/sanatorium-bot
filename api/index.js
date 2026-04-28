@@ -463,10 +463,14 @@ async function handleStartCommand({ chatId, telegramId, firstName, username, tex
     const slug = startPayload.replace(/^ref_/, "").trim().toLowerCase();
     const mentor = await getMentorBySlug(slug);
 
-    await updateUserFields(telegramId, {
-      ref_code: slug,
-      mentor_name: mentor?.name || null,
-    });
+    const existingUser = await getUser(telegramId);
+
+if (!existingUser?.ref_code) {
+  await updateUserFields(telegramId, {
+    ref_code: slug,
+    mentor_name: mentor?.name || null,
+  });
+}
   }
 
   const user = await getUser(telegramId);
