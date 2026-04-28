@@ -20,6 +20,7 @@ async function handler(req, res) {
 
     const payment = event.object || {};
     const plan = String(payment.metadata?.plan || payment.description || "").trim();
+    console.log("YOOKASSA_PLAN:", plan);
     const chatId = String(payment.metadata?.chatId || "").trim();
 
     if (!chatId) {
