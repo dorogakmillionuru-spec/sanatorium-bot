@@ -70,6 +70,13 @@ else if (plan.toLowerCase().includes("безлимит")) {
   });
 }
 
+    const ADMIN_ID = 753917618;
+
+await sendTelegramMessage(
+  ADMIN_ID,
+ `💸 Новая оплата\n\nПользователь: ${chatId}\nТариф: ${plan}`
+);
+    
     await sendTelegramMessage(
   chatId,
   "Оплата прошла ✅\n\nТы не просто оплатил — ты сделал шаг.\nТеперь можно не тащить это в себе.\n\nЧто у тебя сейчас больше всего давит?"
