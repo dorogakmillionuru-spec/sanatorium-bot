@@ -74,7 +74,7 @@ else if (plan.toLowerCase().includes("безлимит")) {
 
 await sendTelegramMessage(
   ADMIN_ID,
- `💸 Новая оплата\n\nПользователь: ${chatId}\nТариф: ${plan}`
+  `💸 Новая оплата\n\nПользователь: ${user.first_name || "без имени"} ${user.username ? "@" + user.username : ""}\nTelegram ID: ${chatId}\nТариф: ${plan}`
 );
     
     await sendTelegramMessage(
