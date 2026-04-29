@@ -274,9 +274,17 @@ function extractLockMarker(text) {
 }
 
 function hasAccess(user) {
-  if (!user.has_used_free) return true;
-  if (user.access_active) return true;
-  return false;
+if (!user.has_used_free) return true;
+
+if (user.unlimited_until && new Date(user.unlimited_until) > new Date()) {
+  return true;
+}
+
+if (user.sessions_left && user.sessions_left > 0) {
+  return true;
+}
+
+return false;
 }
 
 async function handleCommand({ chatId, telegramId, firstName, username, text }) {
