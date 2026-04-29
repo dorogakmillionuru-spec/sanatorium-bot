@@ -838,11 +838,24 @@ async function lockSessionForUser(user) {
     return;
   }
 
-if (user.access_active) {
+  if (user.sessions_left && user.sessions_left > 0) {
+    const newCount = user.sessions_left - 1;
+
+    await updateUserFields(user.telegram_id, {
+      sessions_left: newCount,
+      access_active: newCount > 0,
+    });
+
+    return;
+  }
+
+  if (user.unlimited_until && new Date(user.unlimited_until) > new Date()) {
+    return;
+  }
+
   await updateUserFields(user.telegram_id, {
     access_active: false,
   });
-}
 }
 async function saveMessage(telegramId, role, content) {
   await sbFetch(`/messages`, {
