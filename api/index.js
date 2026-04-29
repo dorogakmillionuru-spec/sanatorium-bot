@@ -846,11 +846,10 @@ async function lockSessionForUser(user) {
       access_active: newCount > 0,
     });
 
-    return;
   }
 
   if (user.unlimited_until && new Date(user.unlimited_until) > new Date()) {
-    return;
+  
   }
 
   await updateUserFields(user.telegram_id, {
