@@ -684,16 +684,16 @@ await sendMessage(chatId, "Оплата 3 сессий — 299₽", {
 }
 
 async function sendNoAccessMessage(chatId) {
-  await sendMessage(chatId, "Эта сессия уже закрыта. Введи код — и продолжим.");
+  await sendMessage(chatId, "Ну всё, бесплатный санаторий на сегодня закончился 😄\n\nНо если захочешь продолжить — я здесь 👇");
   await sendInlineMenu(chatId);
 }
 
 async function sendInlineMenu(chatId) {
-  await sendMessage(chatId, "Что делаем дальше?", {
+ await sendMessage(chatId, "Выбери, как тебе удобнее 👇", {
     inline_keyboard: [
-  [{ text: "Купить доступ", callback_data: "buy_code" }],
-  [{ text: "У меня есть код", callback_data: "enter_code" }],
-  [{ text: "Помощь", url: "https://t.me/yuliyakuzminova" }],
+[{ text: "✨ Продолжить", callback_data: "buy_code" }],
+[{ text: "🔑 Ввести код", callback_data: "enter_code" }],
+[{ text: "🤍 Нужна помощь", url: "https://t.me/yuliyakuzminova" }],
 ]
   });
 }
