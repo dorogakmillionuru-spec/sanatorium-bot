@@ -684,7 +684,8 @@ await sendMessage(chatId, "Оплата 3 сессий — 299₽", {
 }
 
 async function sendNoAccessMessage(chatId) {
-  await sendMessage(chatId, "Ну всё, бесплатный санаторий на сегодня закончился 😄\n\nНо если захочешь продолжить — я здесь 👇");
+  await sendMessage(chatId, "Ну всё, бесплатный санаторий на сегодня закончился 😄\n\nНо если захочешь продолжить —
+можно спокойно вернуться позже 👇");
   await sendInlineMenu(chatId);
 }
 
